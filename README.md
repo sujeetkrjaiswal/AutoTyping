@@ -11,7 +11,7 @@ The auto-typing module accepts two listner : timer(default) & keystroke based.
 <div id="myAutoTypingPlayArea"></div>
 <pre id="myTextInPreBlock">
 Hello World!
-This will ensure easy writing of text and
+This will ensure asy^#4#^easy writing of text and^@8@^
 will help retain new line characters
 </pre>
 <script src="./path/to/AutoTyping.js"></script>
@@ -27,6 +27,13 @@ var autotype = new AutoTyping.App(elm,text,AutoTyping.ListnerType.default,5)
 ```
 
 ## Explanation of parameters ##
+### Text Options ###
+Expression  |   When to Use
+------------|-----------------------------
+^#4#^       |   Remove last 4 characters
+^@8#^       |   Wait for 8 keyStrokes
+
+
 ### Listener Type: ###
 Options 	|	Config to pass
 ------------|-----------------------------------
