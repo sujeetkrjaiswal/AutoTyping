@@ -6,8 +6,8 @@
 </head>
 <body>
 <div>
-	<button>Timer Based</button>
-
+	<button onclick="AppInit('timer');this.blur();">Timer Based</button>
+	<button onclick="AppInit('keyStroke');this.blur();">KeyStroke Based</button>
 </div>
 <pre id="autoTypePlayArea"></pre>
 <pre id="autoTypeText">
@@ -52,7 +52,7 @@
 		}
 	}
 </pre>
-<script src="./js/AutoTyping.min.js"></script>
+<script src="./AutoTyping.min.js"></script>
 <script>
 	if (window.addEventListener) { // Mozilla, Netscape, Firefox
 		window.addEventListener('load', InitDemo, false);
@@ -71,8 +71,12 @@
 	}
 	function cleanUp(){
 		params.playElem.innerHTML = "";
+		if(app){
+			app.stop();
+		}
 	}
 	function AppInit(typeStr){
+		cleanUp()
 		var type = AutoTyping.ListnerType.timer;
 		if(typeStr!=="timer"){
 			type = AutoTyping.ListnerType.keyStroke;
