@@ -1,53 +1,45 @@
-# typing.js
-This is a typing animation library using vanilla javascript and hence have no dependency. Its souce is written in TypeScript that can produce ECMA 3/5/6 as per your need.
+# AutoTyping #
+This module will help to create AutoTyping effect from the pre-provide text.
+The auto-typing module accepts two listner : timer(default) & keystroke based.
 
-You can add a new line, append to an existing line, add and delete , delete last line or whole with the typing backward effect and if for deleting you don't want the effect you can just clear. You can also take a users input and then can you later.
+## QuickStart ##
+**html file**
+```html
+<html>
+<head> ... </head>
+<body>
+<div id="myAutoTypingPlayArea"></div>
+<pre id="myTextInPreBlock">
+Hello World!
+This will ensure easy writing of text and
+will help retain new line characters
+</pre>
+<script src="./path/to/AutoTyping.js"></script>
+</body>
+</html>
+````
+**javascript snippet**
+```javascript
+var elm = document.getElementById("myAutoTypingPlayArea");
+var text = document.getElementById("myTextInPreBlock").innerText();
+var strokeSpeed = 5; //5 * 100 ms for timer (default)
+var autotype = new AutoTyping.App(elm,text,AutoTyping.ListnerType.default,5)
+```
 
-This is still in Alpha.
-Detailed Documentation and Examples will be added shortly.
+## Explanation of parameters ##
+### Listener Type: ###
+Options 	|	Config to pass
+------------|-----------------------------------
+timer 		|	AutoTyping.ListnerType.timer
+keyStroke 	|	AutoTyping.ListnerType.keyStroke
+default 	|	AutoTyping.ListnerType.default
 
-Sort usage guidlines:
-
-1. add typing.js from dist to your html file
-2. create a empty  div and give it an id.
-    Eg: <div id="my_typing_area"></div>
-    adjust styles as per your need
-3. in your script section create a class like this and few objects for typing text and other action then pass it to function startTyping 
-
-    var demoTyping = 
-    new TypingModule.Typing(document.getElementById("my_typing_area"));
-    
-    var typeObj1= {
-    	text2type:"Please Enter Your Name to continue :",
-    	forwardSpeed: 50,
-    	backwardSpeed:75,
-    	delay:20,
-    	action: 1
-    }
-    var typeObj2= {
-    	text2type:"",
-    	forwardSpeed: 100,
-    	backwardSpeed:75,
-    	delay:20,
-    	action: 3
-    }
-    var typeObj3= {
-    	text2type:"Hello #userinput#, Have a good day",
-    	forwardSpeed: 100,
-    	backwardSpeed:75,
-    	delay:20,
-    	action: 1
-    }
-demoTyping.startTyping([typeObj1, typeObj2, typeObj3,]);
-
-Values of acion:
-	0:	"append", //with typing effect
-	1:	"newLine", //with typing effect
-	2:	"addDeleteLine", //add a line with effect and after delay delete it
-	3:	"userInput",//take the users input
-	4:	"deleteLast", // with typing effect
-	5:	"deleteAll", //with typing effect
-	6:	"clearLast", //direct delete lastchild node
-	7:	"clearAll" //delete all child node
-
-See a Demo at : http://www.sujeetjaiswal.com/diwali
+### Constructor Parameters ###
+**Constructor Function** : AutoTyping.App
+Parameters 	|	Explanations
+------------|----------------------------------------
+element 	|	The element over inside which, the auto typing will insert text nodes
+text 		|	the complete text that will be inserted
+type 		|	is it timer based or key press event based (Use the options from above ListnerType Options)
+strokeSpeed	|	for timer = it is time ( in t X 100 ms) when pseduo key stroke is pressed, and for key Stroke: no. of characters it would process for every physical key press
+callback 	| 	Optional callback function when the text auto tying is finished
