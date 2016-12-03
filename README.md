@@ -37,7 +37,7 @@ default 	|	AutoTyping.ListnerType.default
 ### Constructor Parameters ###
 **Constructor Function** : AutoTyping.App
 Parameters 	|	Explanations
-------------|----------------------------------------
+------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 element 	|	The element over inside which, the auto typing will insert text nodes
 text 		|	the complete text that will be inserted
 type 		|	is it timer based or key press event based (Use the options from above ListnerType Options)
