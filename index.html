@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AutoTyping</title>
+	<link rel="stylesheet" href="./app.css">
+</head>
+<body>
+<div>
+	<button>Timer Based</button>
+
+</div>
+<pre id="autoTypePlayArea"></pre>
+<pre id="autoTypeText">
+	class CorpusManager {
+		private textNodeManger: TextNodeManger;
+		private corpusArr: Corpus[];
+		private static removePattern: RegExp = new RegExp("^\\^#\\d+#\\^$");
+		private static waitPattern: RegExp = new RegExp("^\\^@\\d+@\\^$");
+
+		private currCorpus: Corpus;
+
+		constructor(wholeCorpus: string, element: HTMLElement) {
+			this.textNodeManger = new TextNodeManger(element)
+			this.corpusArr = this.stringToCorpusArr(wholeCorpus).reverse();
+		}
+		private stringToCorpusArr(wholeCorpus: string): Corpus[] {
+			return wholeCorpus.split(/(\^#\d+#\^|\^@\d+@\^)/g).map((corpus) => this.stringToCorpus(corpus));
+		}
+		private stringToCorpus(corpusStr: string): Corpus {
+			if (CorpusManager.removePattern.test(corpusStr)) {
+				return new RemoveCorpus(this.textNodeManger, parseInt(corpusStr.slice(2, -2)) || 0)
+			} else if (CorpusManager.waitPattern.test(corpusStr)) {
+				return new WaitCorpus(parseInt(corpusStr.slice(2, -2)) || 0);
+			} else {
+				return new AddCorpus(this.textNodeManger, corpusStr);
+			}
+		}
+
+		private hasNext(): boolean {
+			while ((this.currCorpus == null || this.currCorpus.hasNext() == false) && this.corpusArr.length > 0) {
+				this.currCorpus = this.corpusArr.pop();
+			}
+			return this.currCorpus != null && (this.currCorpus.hasNext() || this.corpusArr.length > 0);
+		}
+		public doNext(): boolean {
+			if (this.hasNext()) {
+				this.currCorpus.doNext();
+				return this.hasNext();
+			} else {
+				return false;
+			}
+		}
+	}
+</pre>
+<script src="./js/AutoTyping.min.js"></script>
+<script>
+	if (window.addEventListener) { // Mozilla, Netscape, Firefox
+		window.addEventListener('load', InitDemo, false);
+	} else if (window.attachEvent) { // IE
+		window.attachEvent('onload', InitDemo);
+	}
+	var app,params = {};
+
+	function InitDemo(type){
+		params.autoTypeText = document.getElementById("autoTypeText").innerText;
+		params.playElem = document.getElementById("autoTypePlayArea");
+		params.callback	= function(){
+			console.log("From Callback","Operation finised.")
+		}
+		AppInit(AutoTyping.ListnerType.timer)
+	}
+	function cleanUp(){
+		params.playElem.innerHTML = "";
+	}
+	function AppInit(typeStr){
+		var type = AutoTyping.ListnerType.timer;
+		if(typeStr!=="timer"){
+			type = AutoTyping.ListnerType.keyStroke;
+		}
+		app = new AutoTyping.App(params.playElem, params.autoTypeText,type,1,params.callback);
+		app.start();
+	}
+</script>
+</body>
+</html>

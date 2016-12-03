@@ -1,0 +1,43 @@
+body,pre{
+	margin:0;
+	padding:0;
+	border:0;
+}
+body{
+
+	background-color: #444;
+	color:#F5F5F5;
+}
+
+#autoTypeText{
+	display: none;
+}
+#autoTypePlayArea::after{
+	display:inline-block;
+	content:' ';
+	width:3px;
+	margin-left:2px;
+	height:1em;
+	background-color:#DDD;
+	animation:blink 0.25s linear 0s infinite alternate
+}
+@keyframes blink{
+	from{background-color:transparent;}
+	to{background-color:#DDD;}
+}
+@-webkit-keyframes blink{
+	from{background-color:transparent;}
+	to{background-color:#DDD;}
+}
+@-moz-keyframes blink{
+	from{background-color:transparent;}
+	to{background-color:#DDD;}
+}
+@-o-keyframes blink{
+	from {background-color:transparent;}
+	to{background-color:#DDD;}
+}
+@-ms-keyframes blink{
+	from {background-color:transparent;}
+	to{background-color:#DDD;}
+}
