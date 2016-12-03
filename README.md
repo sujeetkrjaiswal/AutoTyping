@@ -8,7 +8,7 @@ The auto-typing module accepts two listner : timer(default) & keystroke based.
 <html>
 <head> ... </head>
 <body>
-<div id="myAutoTypingPlayArea"></div>
+<pre id="myAutoTypingPlayArea"></pre>
 <pre id="myTextInPreBlock">
 Hello World!
 This will ensure asy^#4#^easy writing of text and^@8@^
@@ -23,7 +23,11 @@ will help retain new line characters
 var elm = document.getElementById("myAutoTypingPlayArea");
 var text = document.getElementById("myTextInPreBlock").innerText();
 var strokeSpeed = 5; //5 * 100 ms for timer (default)
-var autotype = new AutoTyping.App(elm,text,AutoTyping.ListnerType.default,5)
+var autotypeApp = new AutoTyping.App(elm,text,AutoTyping.ListnerType.default,5);
+autotypeApp.start();
+
+//Somepoint later : If manually needed to be stoped
+autotypeApp.stop();
 ```
 
 ## Explanation of parameters ##
