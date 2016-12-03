@@ -7,7 +7,7 @@ var AutoTyping;
     /**ListnerType : Public Visibility
      * This is the list of listener available for the AutoTying to work
      * keyStroke : Tells the auto type should happen on every keypress : imitates psedo auto typing
-     * timer: This tells to auto type based on some time duration : imitates true auto-typing
+     * timer(default): This tells to auto type based on some time duration : imitates true auto-typing
      */
     (function (ListnerType) {
         ListnerType[ListnerType["keyStroke"] = 0] = "keyStroke";
@@ -170,10 +170,11 @@ var AutoTyping;
          * @param type : is it timer based or key press event based
          * @param strokeSpeed : for timer = it is time ( in t X 100 ms) when pseduo key stroke is pressed
          *                      for key Stroke: no. of characters it would process for every physical key press
+         * @param callback : Optional callback function when the text auto tying is finished
          */
         function App(element, text, type, strokeSpeed, callback) {
             this.corpusManager = new CorpusManager(text, element);
-            this.type = type == ListnerType.default ? ListnerType.keyStroke : type;
+            this.type = type == ListnerType.default ? ListnerType.timer : type;
             this.stopped = false;
             this.strokeSpeed = strokeSpeed;
             this.callback = callback;
