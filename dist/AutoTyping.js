@@ -173,11 +173,19 @@ var AutoTyping;
          * @param callback : Optional callback function when the text auto tying is finished
          */
         function App(element, text, type, strokeSpeed, callback) {
+            var _this = this;
             this.corpusManager = new CorpusManager(text, element);
             this.type = type == ListnerType.default ? ListnerType.timer : type;
             this.stopped = false;
             this.strokeSpeed = strokeSpeed;
             this.callback = callback;
+            this.strokeListener = function () {
+                if (!_this.stopped) {
+                    for (var i = 0; i < _this.strokeSpeed; i++) {
+                        _this.next();
+                    }
+                }
+            };
         }
         App.prototype.next = function () {
             if (!this.corpusManager.doNext()) {
@@ -189,17 +197,10 @@ var AutoTyping;
             }
         };
         App.prototype.start = function () {
-            var _this = this;
             this.stopped = false;
             switch (this.type) {
                 case ListnerType.keyStroke:
-                    document.body.addEventListener("keyup", function () {
-                        if (!_this.stopped) {
-                            for (var i = 0; i < _this.strokeSpeed; i++) {
-                                _this.next();
-                            }
-                        }
-                    }, false);
+                    document.body.addEventListener("keyup", this.strokeListener, false);
                     break;
                 case ListnerType.timer:
                     this.timerCaller();
@@ -221,6 +222,7 @@ var AutoTyping;
             switch (this.type) {
                 case ListnerType.keyStroke:
                     this.stopped = true;
+                    document.body.removeEventListener("keyup", this.strokeListener, false);
                     break;
                 case ListnerType.timer:
                     this.stopped = true;

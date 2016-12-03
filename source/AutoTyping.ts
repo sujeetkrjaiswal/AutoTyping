@@ -178,6 +178,7 @@
         private stopped: boolean;
         private strokeSpeed: number;
         private callback: Function;
+        private strokeListener :EventListener;
         /**
          * 
          * @param element :  The element over inside which, the auto typing will insert text nodes
@@ -193,6 +194,13 @@
             this.stopped = false;
             this.strokeSpeed = strokeSpeed;
             this.callback = callback;
+            this.strokeListener = ()=>{
+                if (!this.stopped) {
+                    for (let i = 0; i < this.strokeSpeed; i++) {
+                        this.next();
+                    }
+                }
+            };
         }
         private next() {
             if (!this.corpusManager.doNext()) {
@@ -207,13 +215,7 @@
             this.stopped = false;
             switch (this.type) {
                 case ListnerType.keyStroke:
-                    document.body.addEventListener("keyup", () => {
-                        if (!this.stopped) {
-                            for (let i = 0; i < this.strokeSpeed; i++) {
-                                this.next();
-                            }
-                        }
-                    }, false);
+                    document.body.addEventListener("keyup", this.strokeListener, false);
                     break;
                 case ListnerType.timer:
                     this.timerCaller();
@@ -234,6 +236,7 @@
             switch (this.type) {
                 case ListnerType.keyStroke:
                     this.stopped = true;
+                    document.body.removeEventListener("keyup",this.strokeListener,false);
                     break;
                 case ListnerType.timer:
                     this.stopped = true;
