@@ -8,9 +8,36 @@ body{
 	background-color: #444;
 	color:#F5F5F5;
 }
-
+.bannerBar{
+	background-color: #666;
+	color:#eee;
+}
+.links,.btnLinks{
+	display: inline-block;
+	padding:10px;
+	background-color: #666;
+	color:#eee;
+	text-decoration: none;
+}
+.btnLinks.active{
+	background-color: #eee;
+	color:#333;
+}
+.btnContainer{
+	white-space: nowrap;
+    float: right;
+    margin-right: 10px;
+}
+.bannerBar::after,.btnContainer::after{
+	content:'';
+	display: block;
+	clear:both;
+}
 #autoTypeText{
 	display: none;
+}
+#autoTypePlayArea{
+	tab-size:15px;
 }
 #autoTypePlayArea::after{
 	display:inline-block;
@@ -19,7 +46,7 @@ body{
 	margin-left:2px;
 	height:1em;
 	background-color:#DDD;
-	animation:blink 0.25s linear 0s infinite alternate
+	animation:blink 0.25s linear 0s infinite alternate;
 }
 @keyframes blink{
 	from{background-color:transparent;}

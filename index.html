@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>AutoTyping</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>AutoTyping - By Sujeet Kr. Jaiswal</title>
+    <meta name="description" content="Auto Typing module demo. This would write the text in an incremental way. The event that it responds to are keypress event and the time based.">
+    <meta name="keywords" content="AutoTyping, Demo, TypeScript">
 	<link rel="stylesheet" href="./app.css">
 </head>
 <body>
-<div>
-	<button onclick="AppInit('timer');this.blur();">Timer Based</button>
-	<button onclick="AppInit('keyStroke');this.blur();">KeyStroke Based</button>
+<div class="bannerBar">
+	<a class="links" href="http://sujeetjaiswal.com">Sujeet Kr. Jaiswal</a>
+	<span class="btnContainer">
+	<button class="btnLinks" onclick="AppInit(event,'timer');">Timer Based</button>
+	<button class="btnLinks" onclick="AppInit(event,'keyStroke');">KeyStroke Based</button>
+	</span>
 </div>
 <pre id="autoTypePlayArea"></pre>
 <pre id="autoTypeText">
@@ -60,14 +69,15 @@
 		window.attachEvent('onload', InitDemo);
 	}
 	var app,params = {};
-
+	var btnElements = document.getElementsByClassName("btnLinks");
 	function InitDemo(type){
 		params.autoTypeText = document.getElementById("autoTypeText").innerText;
 		params.playElem = document.getElementById("autoTypePlayArea");
 		params.callback	= function(){
 			console.log("From Callback","Operation finised.")
 		}
-		AppInit("timer")
+		//AppInit("timer")
+		btnElements[0].click();
 	}
 	function cleanUp(){
 		params.playElem.innerHTML = "";
@@ -75,7 +85,7 @@
 			app.stop();
 		}
 	}
-	function AppInit(typeStr){
+	function AppInit(e,typeStr){
 		cleanUp()
 		var type = AutoTyping.ListnerType.timer;
 		if(typeStr!=="timer"){
@@ -83,6 +93,15 @@
 		}
 		app = new AutoTyping.App(params.playElem, params.autoTypeText,type,1,params.callback);
 		app.start();
+		setMeActive((e.target) ? e.target : e.srcElement);
+	}
+	function setMeActive(elem){
+		//btnThis.blur();
+		for(var i =0,len=btnElements.length;i<len;i++){
+			btnElements[i].className = "btnLinks";
+		}
+		elem.className = "btnLinks active";
+		elem.blur();
 	}
 </script>
 </body>
